@@ -34,12 +34,12 @@ public class UserController {
 		return ResponseEntity.ok().body(dto);
 	}
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
-	@GetMapping(value = "/me")
-	public ResponseEntity<UserDto> findMe() {
-		UserDto dto = service.findMe();
-		return ResponseEntity.ok().body(dto);
-	}
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
+//	@GetMapping(value = "/me")
+//	public ResponseEntity<UserDto> findMe() {
+//		UserDto dto = service.findMe();
+//		return ResponseEntity.ok().body(dto);
+//	}
 	
 	@PostMapping
 	public ResponseEntity<UserDto> insert(@RequestBody @Valid UserInsertDto dto) {

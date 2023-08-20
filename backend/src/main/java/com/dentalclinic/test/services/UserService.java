@@ -67,11 +67,11 @@ public class UserService implements UserDetailsService {
         return new UserDto(entity);
     }
 
-    @Transactional(readOnly = true)
-    public UserDto findMe() {
-        User entity = authenticated();
-        return new UserDto(entity);
-    }
+//    @Transactional(readOnly = true)
+//    public UserDto findMe() {
+//        User entity = authenticated();
+//        return new UserDto(entity);
+//    }
 
     @Transactional
     public UserDto insert(UserInsertDto dto) {
@@ -140,15 +140,15 @@ public class UserService implements UserDetailsService {
 
         return user;
     }
-    protected User authenticated() {
-        try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
-            String username = jwtPrincipal.getClaim("username");
-            return repository.findByEmail(username);
-        }
-        catch (Exception e) {
-            throw new UsernameNotFoundException("Invalid user");
-        }
-    }
+//    protected User authenticated() {
+//        try {
+//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
+//            String username = jwtPrincipal.getClaim("username");
+//            return repository.findByEmail(username);
+//        }
+//        catch (Exception e) {
+//            throw new UsernameNotFoundException("Invalid user");
+//        }
+//    }
 }

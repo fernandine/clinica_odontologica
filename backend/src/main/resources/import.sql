@@ -11,6 +11,13 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
 
+-- -------------------------------------------
+-- Pacientes
+-- -------------------------------------------
+INSERT INTO tb_patient (name, appointment_date, dentist, description) VALUES ('Maria', NOW(), 'Dra.Silvia', 'Descrição...');
+INSERT INTO tb_patient (name, appointment_date, dentist, description) VALUES ('Maria', NOW(), 'Dra.Silvia', 'Descrição...');
+INSERT INTO tb_patient (name, appointment_date, dentist, description) VALUES ('Maria', NOW(), 'Dra.Silvia', 'Descrição...');
+INSERT INTO tb_patient (name, appointment_date, dentist, description) VALUES ('Maria', NOW(), 'Dra.henrik', 'Descrição...');
 
 -- -----------------------------------------------------
 -- Endereços

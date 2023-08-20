@@ -1,7 +1,7 @@
 package com.dentalclinic.test.config.customgrant;
-/*
-import br.com.fernandinesuplementos.loja.entities.User;
-import br.com.fernandinesuplementos.loja.repositories.UserRepository;
+
+import com.dentalclinic.test.entities.User;
+import com.dentalclinic.test.repositories.UserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -70,12 +70,9 @@ public class CustomAccessTokenResponseHandler implements AuthenticationSuccessHa
         Map<String, Object> successCodeMessageMap = new HashMap<>();
         successCodeMessageMap.putAll(additionalParameters);
         successCodeMessageMap.put("id", user.getId());
-        successCodeMessageMap.put("firstname", user.getFirstname());
-        successCodeMessageMap.put("lastname", user.getLastname());
-        successCodeMessageMap.put("cpf", user.getCpf());
+        successCodeMessageMap.put("name", user.getName());
         successCodeMessageMap.put("phone", user.getPhone());
         successCodeMessageMap.put("email", user.getEmail());
         return successCodeMessageMap;
     }
 }
-*/

@@ -1,5 +1,6 @@
 package com.dentalclinic.test.config;
 
+import com.dentalclinic.test.config.customgrant.CustomAccessTokenResponseHandler;
 import com.dentalclinic.test.config.customgrant.CustomPasswordAuthenticationConverter;
 import com.dentalclinic.test.config.customgrant.CustomPasswordAuthenticationProvider;
 import com.dentalclinic.test.config.customgrant.CustomUserAuthorities;
@@ -74,7 +75,7 @@ public class AuthorizationServerConfig {
         http
                 .getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 .tokenEndpoint(tokenEndpoint -> tokenEndpoint
-                       // .accessTokenResponseHandler(new CustomAccessTokenResponseHandler(userRepository))
+                        .accessTokenResponseHandler(new CustomAccessTokenResponseHandler(userRepository))
                         .accessTokenRequestConverter(new CustomPasswordAuthenticationConverter())
                         .authenticationProvider(
                                 new CustomPasswordAuthenticationProvider(authorizationService(),

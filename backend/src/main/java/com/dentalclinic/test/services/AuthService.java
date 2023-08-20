@@ -36,12 +36,12 @@ public class AuthService {
     @Autowired
     private EmailService emailService;
 
-    public void validateSelfOrAdmin(long userId) {
-        User me = userService.authenticated();
-        if (!me.hasRole("ROLE_DENTIST") && !me.getId().equals(userId)) {
-            throw new ForbiddenException("Access denied");
-        }
-    }
+//    public void validateSelfOrAdmin(long userId) {
+//        User me = userService.authenticated();
+//        if (!me.hasRole("ROLE_DENTIST") && !me.getId().equals(userId)) {
+//            throw new ForbiddenException("Access denied");
+//        }
+//    }
 
     @Transactional
     public void createRecoverToken(EmailDto body) {

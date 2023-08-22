@@ -1,5 +1,5 @@
-import { Component, Inject, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Input, ViewChild } from '@angular/core';
+import { MatDialog, } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -37,22 +37,28 @@ export class PatientComponent {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     private report: ReportService,
-    public dialogRef: MatDialogRef<ReportComponent>,
-    @Inject(MAT_DIALOG_DATA) public patient: Patient
+
   ) {}
 
   ngOnInit() {
     this.refresh();
   }
 
-  onPDF(id: string): void {
-    if (id) {
-    this.report.getPDF(this.code, this.acao, id).subscribe(blob => {
-      const file = new Blob([blob], { type: 'application/pdf' });
-      const fileURL = URL.createObjectURL(file);
-      window.open(fileURL);
-    });
-   }
+  onPDF() {
+    if (this.patient$) {
+      const code = '01';
+      const acao = 'v';
+
+      this.report.getPDF(code, acao).subscribe(
+        (pdfBlob: Blob) => {
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+          window.open(pdfUrl, '_blank');
+        },
+        (error) => {
+          console.error('Error fetching PDF:', error);
+        }
+      );
+    }
   }
 
   refresh() {

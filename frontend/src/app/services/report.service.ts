@@ -14,8 +14,8 @@ export class ReportService {
   constructor(private http: HttpClient,
     private authService: AuthService) { }
 
-  getPDF(code: string, acao: string, id: string): Observable<Blob> {
+  getPDF(code: string, acao: string): Observable<Blob> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' }).set('Authorization', `Bearer ${this.authService.getToken()}`);
-    return this.http.get(`${this.apiUrl}?code=${code}&acao=${acao}&id=${id}`, { headers, responseType: 'blob' });
+    return this.http.get(`${this.apiUrl}?code=${code}&acao=${acao}`, { headers, responseType: 'blob' });
   }
 }

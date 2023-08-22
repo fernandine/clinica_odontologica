@@ -1,12 +1,11 @@
 package com.dentalclinic.test.entities;
 
+import com.dentalclinic.test.DTOs.AddressDto;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @SuppressWarnings("serial")
 @Entity
@@ -21,9 +20,12 @@ public class Patient implements Serializable {
     private Instant appointmentDate;
     private String dentist;
     private String description;
-    @OneToMany(mappedBy = "patient")
-    private List<Address> addressList = new ArrayList<>();
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "tb_patient_address",
+            joinColumns = @JoinColumn(name = "patient_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id"))
+    private Set<Address> addressList = new HashSet<>();
     public Patient() {
     }
 
@@ -84,11 +86,11 @@ public class Patient implements Serializable {
         this.phone = phone;
     }
 
-    public List<Address> getAddressList() {
+    public Set<Address> getAddressList() {
         return addressList;
     }
 
-    public void setAddressList(List<Address> addressList) {
+    public void setAddressList(Set<Address> addressList) {
         this.addressList = addressList;
     }
 

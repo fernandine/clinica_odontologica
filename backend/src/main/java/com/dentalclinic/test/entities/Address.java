@@ -1,5 +1,6 @@
 package com.dentalclinic.test.entities;
 
+import com.dentalclinic.test.DTOs.AddressDto;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,9 +18,9 @@ public class Address implements Serializable {
     private String bairro;
     private String localidade;
     private String uf;
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
+//    @ManyToOne
+//    @JoinColumn(name = "patient_id")
+//    private Patient patient;
 
     public Address() {}
 
@@ -32,7 +33,7 @@ public class Address implements Serializable {
         this.bairro = bairro;
         this.localidade = localidade;
         this.uf = uf;
-        this.patient = patient;
+//        this.patient = patient;
     }
 
     public Long getId() {
@@ -91,13 +92,13 @@ public class Address implements Serializable {
         this.uf = uf;
     }
 
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
+//    public Patient getPatient() {
+//        return patient;
+//    }
+//
+//    public void setPatient(Patient patient) {
+//        this.patient = patient;
+//    }
 
     @Override
     public boolean equals(Object o) {

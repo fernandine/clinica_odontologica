@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +14,6 @@ export class RegisterComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService,
     private router: Router
   ) {}
 
@@ -40,28 +38,6 @@ export class RegisterComponent {
     return password === passConfirmation ? null : { mismatch: true };
   }
 
-  formatPhoneNumber(mobileNumber: string): string {
-    const phoneRegex = /^(\d{2})?[\s-]?(\d{4,5})-?(\d{4})$/;
-    const formattedPhoneNumber = mobileNumber.replace(
-      phoneRegex,
-      function (match, p1, p2, p3) {
-        if (p1) {
-          return '(' + p1 + ') ' + p2 + '-' + p3;
-        } else {
-          return p2 + '-' + p3;
-        }
-      }
-    );
-    return formattedPhoneNumber;
-  }
-
-  formatMobileNumber() {
-    let mobileNumber = this.registerForm.get('mobileNumber')?.value;
-    mobileNumber = mobileNumber.replace(/\D/g, ''); // remove todos os caracteres não numéricos
-    const formattedPhoneNumber = this.formatPhoneNumber(mobileNumber);
-    this.registerForm.get('mobileNumber')?.setValue(formattedPhoneNumber);
-  }
-
   onReturn() {
     this.router.navigate(['/auth-login']);
   }
@@ -71,16 +47,5 @@ export class RegisterComponent {
     if (this.registerForm.invalid) {
       return;
     }
-    // Formata o número de telefone antes de enviar
-    const formattedPhoneNumber = this.formatPhoneNumber(this.mobileNumber);
-    this.registerForm.get('mobileNumber')?.setValue(formattedPhoneNumber);
-
-    this.userService.createUser(this.registerForm.value).subscribe(
-      (response) => {
-        console.log('Usuário registrado com sucesso!', response);
-        this.router.navigate(['/auth-login']);
-      },
-      (error) => console.log('Erro ao registrar usuário', error)
-    );
   }
 }

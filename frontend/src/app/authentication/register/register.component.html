@@ -27,19 +27,6 @@
             <input matInput formControlName="password" type="password">
           </mat-form-field>
         </div>
-
-        <div style="flex: 1; margin-left: 5px;">
-          <mat-form-field appearance="outline" class="form-field" hintLabel="Mínimo de 8 caracteres">
-            <mat-label>Confirme a Senha</mat-label>
-            <input matInput formControlName="passConfirmation" type="password">
-          </mat-form-field>
-
-          <div class="pass-error"
-          *ngIf="registerForm.get('passConfirmation')?.dirty &&
-          !registerForm.get('passConfirmation')?.valid">
-            Senha não confere
-          </div>
-        </div>
       </div>
 
       <div class="button-row">

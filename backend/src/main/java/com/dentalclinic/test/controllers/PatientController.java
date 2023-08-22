@@ -2,17 +2,22 @@ package com.dentalclinic.test.controllers;
 
 import com.dentalclinic.test.DTOs.PatientDto;
 import com.dentalclinic.test.services.PatientService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
+@Tag(name = "Pacientes", description = "Controle de pacientes")
 @RestController
 @RequestMapping(value = "/patients")
 public class PatientController {
@@ -26,7 +31,7 @@ public class PatientController {
         return ResponseEntity.ok().body(list);
     }
 
-    //@PreAuthorize("hasRole('ROLE_DENTIST')")
+    //@PreAuthorize("hasAnyRole('ROLE_DENTIST', 'ROLE_ADMIN')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<PatientDto> findPatientById (@PathVariable Long id) {
         PatientDto dto = service.findById(id);
@@ -34,6 +39,11 @@ public class PatientController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Criação de um novo paciente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Paciente criado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
     public ResponseEntity<PatientDto> insert(@RequestBody @Valid PatientDto dto) {
         PatientDto newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

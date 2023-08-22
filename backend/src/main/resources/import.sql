@@ -11,7 +11,7 @@ INSERT INTO tb_role (authority) VALUES ('ROLE_DENTIST');
 INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
-INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 2);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 1);
 
 -- -------------------------------------------
 -- Pacientes
@@ -24,5 +24,12 @@ INSERT INTO tb_patient (name, phone, appointment_date, dentist, description) VAL
 -- -----------------------------------------------------
 -- Endereços
 -- -----------------------------------------------------
-INSERT INTO tb_address(cep, logradouro,complemento, bairro, localidade, uf, patient_id) VALUES ('34001090','Rua Levy Firmino Alves', 'casa A', 'Parque Santo Antônio', 'Nova Lima', 'MG', 1);
-INSERT INTO tb_address(cep, logradouro,complemento, bairro, localidade, uf, patient_id) VALUES ('34012856','Rua Seis', 'casa B', 'Santa Rita', 'Nova Lima', 'MG', 2);
+INSERT INTO tb_address(cep, logradouro,complemento, bairro, localidade, uf) VALUES ('34001090','cinco', 'casa A', 'Parque Santo Antônio', 'Nova Lima', 'MG');
+INSERT INTO tb_address(cep, logradouro,complemento, bairro, localidade, uf) VALUES ('34012856','Rua Seis', 'casa B', 'Santa Rita', 'Nova Lima', 'MG');
+INSERT INTO tb_address(cep, logradouro,complemento, bairro, localidade, uf) VALUES ('34012856','Rua Seis', 'casa B', 'Santa Rita', 'Nova Lima', 'MG');
+INSERT INTO tb_address(cep, logradouro,complemento, bairro, localidade, uf) VALUES ('34012856','Rua Seis', 'casa B', 'Santa Rita', 'Nova Lima', 'MG');
+
+INSERT INTO tb_patient_address (patient_id, address_id ) VALUES (1, 1);
+INSERT INTO tb_patient_address (patient_id, address_id ) VALUES (2, 2);
+INSERT INTO tb_patient_address (patient_id, address_id ) VALUES (3, 3);
+INSERT INTO tb_patient_address (patient_id, address_id ) VALUES (4, 4);

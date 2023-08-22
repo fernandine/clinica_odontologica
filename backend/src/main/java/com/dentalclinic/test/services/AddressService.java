@@ -1,6 +1,7 @@
 package com.dentalclinic.test.services;
 
 import com.dentalclinic.test.DTOs.AddressDto;
+import com.dentalclinic.test.DTOs.UserDto;
 import com.dentalclinic.test.entities.Address;
 import com.dentalclinic.test.entities.Patient;
 import com.dentalclinic.test.entities.User;
@@ -35,12 +36,12 @@ public class AddressService {
         return list.stream().map(AddressDto::new).collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
-    public List<AddressDto> getByPatientId(Long patientId) {
-        Patient patient = patientRepository.getReferenceById(patientId);
-        List<Address> list = repository.findbyPatientId(patient);
-        return list.stream().map(AddressDto::new).collect(Collectors.toList());
-    }
+//    @Transactional(readOnly = true)
+//    public List<AddressDto> getByPatientId(Long patientId) {
+//        Patient patient = patientRepository.getReferenceById(patientId);
+//        List<Address> list = repository.findbyPatientId(patient);
+//        return list.stream().map(AddressDto::new).collect(Collectors.toList());
+//    }
 
     @Transactional(readOnly = true)
     public AddressDto findById(Long id) {
@@ -52,17 +53,7 @@ public class AddressService {
     @Transactional
     public AddressDto insert(AddressDto dto) {
         Address entity = new Address();
-
-        entity.setCep(dto.getCep());
-        entity.setBairro(dto.getBairro());
-        entity.setComplemento(dto.getComplemento());
-        entity.setLogradouro(dto.getLogradouro());
-        entity.setLocalidade(dto.getLocalidade());
-
-        Patient patient = new Patient();
-        patient.setId(dto.getPatientId());
-        entity.setPatient(patient);
-
+        copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
         return new AddressDto(entity);
     }
@@ -71,11 +62,8 @@ public class AddressService {
     public AddressDto update(Long id, AddressDto dto) {
         try {
             Address entity = repository.getReferenceById(id);
-            entity.setCep(dto.getCep());
-            entity.setBairro(dto.getBairro());
-            entity.setComplemento(dto.getComplemento());
-            entity.setLogradouro(dto.getLogradouro());
-            entity.setLocalidade(dto.getLocalidade());
+            copyDtoToEntity(dto, entity);
+
             entity = repository.save(entity);
             return new AddressDto(entity);
         } catch (EntityNotFoundException e) {
@@ -92,5 +80,20 @@ public class AddressService {
             throw new DatabaseException("Integrity violation");
         }
     }
+
+    private void copyDtoToEntity(AddressDto dto, Address entity) {
+
+        entity.setCep(dto.getCep());
+        entity.setBairro(dto.getBairro());
+        entity.setComplemento(dto.getComplemento());
+        entity.setLogradouro(dto.getLogradouro());
+        entity.setLocalidade(dto.getLocalidade());
+
+//        Patient patient = new Patient();
+//        patient.setId(dto.getPatientId());
+//        entity.setPatient(patient);
+
+    }
+
 }
 

@@ -1,17 +1,12 @@
 package com.dentalclinic.test.controllers;
 
 import com.dentalclinic.test.DTOs.PatientDto;
-import com.dentalclinic.test.DTOs.UserDto;
-import com.dentalclinic.test.DTOs.UserInsertDto;
-import com.dentalclinic.test.DTOs.UserUpdateDto;
 import com.dentalclinic.test.services.PatientService;
-import com.dentalclinic.test.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 

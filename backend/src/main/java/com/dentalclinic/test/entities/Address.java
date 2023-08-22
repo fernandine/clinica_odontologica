@@ -18,13 +18,13 @@ public class Address implements Serializable {
     private String localidade;
     private String uf;
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
     public Address() {}
 
     public Address(Long id, String cep, String logradouro, String complemento,
-                   String bairro, String localidade, String uf, User user) {
+                   String bairro, String localidade, String uf, Patient patient) {
         this.id = id;
         this.cep = cep;
         this.logradouro = logradouro;
@@ -32,7 +32,7 @@ public class Address implements Serializable {
         this.bairro = bairro;
         this.localidade = localidade;
         this.uf = uf;
-        this.user = user;
+        this.patient = patient;
     }
 
     public Long getId() {
@@ -91,12 +91,12 @@ public class Address implements Serializable {
         this.uf = uf;
     }
 
-    public User getUser() {
-        return user;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
     @Override

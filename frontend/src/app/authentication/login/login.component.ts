@@ -12,7 +12,6 @@ export class LoginComponent {
 
   loginForm!: FormGroup;
   @Input() error: string = "";
-  @Input() title: string = "Login"
 
   hide = true;
   constructor(

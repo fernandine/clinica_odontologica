@@ -1,62 +1,41 @@
 package com.dentalclinic.test.DTOs;
 
-import com.dentalclinic.test.entities.Address;
 import com.dentalclinic.test.entities.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserDto implements Serializable {
 
     private Long id;
     @NotBlank(message = "Campo obrigatório")
-    private String name;
-    private String phone;
-    private Instant appointmentDate;
-    private String dentist;
-    private String description;
+    private String firstname;
+    private String lastname;
 
     @Email(message = "Favor entrar com email válido")
     private String email;
-    private List<String> roles = new ArrayList<>();
-    private List<AddressDto> addressList = new ArrayList<>();
+    private Set<RoleDto> roles = new HashSet<>();
+
 
     public UserDto() {
     }
 
-    public UserDto(Long id, String name, String phone, Instant appointmentDate,
-                   String dentist, String description, String email) {
+    public UserDto(Long id, String firstname, String lastname, String email) {
         this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.appointmentDate = appointmentDate;
-        this.dentist = dentist;
-        this.description = description;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
     }
 
     public UserDto(User entity) {
         id = entity.getId();
-        name = entity.getName();
+        firstname = entity.getFirstname();
+        lastname = entity.getLastname();
         email = entity.getEmail();
-        phone = entity.getPhone();
-        appointmentDate = entity.getAppointmentDate();
-        dentist = entity.getDentist();
-        description = entity.getDescription();
-
-        for (Address address : entity.getAddressList()) {
-            AddressDto addressDto = new AddressDto(address);
-            addressList.add(addressDto);
-        }
-
-        for (GrantedAuthority role : entity.getAuthorities()) {
-            roles.add(role.getAuthority());
-        }
+        entity.getRoles().forEach(role -> this.roles.add(new RoleDto(role)));
     }
 
     public Long getId() {
@@ -67,44 +46,24 @@ public class UserDto implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public Instant getAppointmentDate() {
-        return appointmentDate;
-    }
-
-    public void setAppointmentDate(Instant appointmentDate) {
-        this.appointmentDate = appointmentDate;
-    }
-
-    public String getDentist() {
-        return dentist;
-    }
-
-    public void setDentist(String dentist) {
-        this.dentist = dentist;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRoles(Set<RoleDto> roles) {
+        this.roles = roles;
     }
 
     public String getEmail() {
@@ -115,19 +74,4 @@ public class UserDto implements Serializable {
         this.email = email;
     }
 
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
-
-    public List<AddressDto> getAddressList() {
-        return addressList;
-    }
-
-    public void setAddressList(List<AddressDto> addressList) {
-        this.addressList = addressList;
-    }
 }

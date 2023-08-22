@@ -32,8 +32,6 @@ public class ResourceServerConfig {
     @Value("${cors.origins}")
     private String corsOrigins;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @Bean
     @Profile("test")

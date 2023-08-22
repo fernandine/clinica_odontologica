@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.*;
 
 @SuppressWarnings("serial")
@@ -17,18 +16,15 @@ public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String phone;
-    @Column(name = "appointment_date")
-    private Instant appointmentDate;
-    private String dentist;
-    private String description;
+    @Column(name = "first_name")
+    private String firstname;
+    @Column(name = "last_name")
+    private String lastname;
+
     @Column(unique = true)
     private String email;
     @JsonIgnore
     private String password;
-    @OneToMany(mappedBy = "user")
-    private List<Address> addressList = new ArrayList<>();
 
     @ManyToMany()
     @JoinTable(name = "tb_user_role",
@@ -39,14 +35,10 @@ public class User implements UserDetails, Serializable {
     public User() {
     }
 
-    public User(Long id, String name, String phone, Instant appointmentDate,
-                String dentist, String description, String email, String password) {
+    public User(Long id, String firstname, String lastname, String email, String password) {
         this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.appointmentDate = appointmentDate;
-        this.dentist = dentist;
-        this.description = description;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.password = password;
     }
@@ -59,44 +51,20 @@ public class User implements UserDetails, Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Instant getAppointmentDate() {
-        return appointmentDate;
-    }
-
-    public void setAppointmentDate(Instant appointmentDate) {
-        this.appointmentDate = appointmentDate;
-    }
-
-    public String getDentist() {
-        return dentist;
-    }
-
-    public void setDentist(String dentist) {
-        this.dentist = dentist;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getEmail() {
@@ -105,14 +73,6 @@ public class User implements UserDetails, Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<Address> getAddressList() {
-        return addressList;
-    }
-
-    public void setAddressList(List<Address> addressList) {
-        this.addressList = addressList;
     }
 
     @Override

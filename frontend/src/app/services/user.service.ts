@@ -33,4 +33,22 @@ export class UserService {
   deleteUser(id: number): Observable<any> {
     return this.http.delete(`${this.userUrl}/${id}`);
   }
+/*
+  getAuthenticatedUser(): Observable<User> {
+    const token = this.getTokenFromLocalStorage();
+    if (token) {
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+
+      return this.http.get<User>(`${this.userUrl}/me`, { headers });
+    } else {
+      return new Observable<User>();
+    }
+  }
+*/
+  private getTokenFromLocalStorage(): string | null {
+    const currentUser = this.storage.getItem('currentUser');
+    return currentUser ? currentUser.token : null;
+  }
 }

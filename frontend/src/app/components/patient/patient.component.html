@@ -1,6 +1,16 @@
 <mat-card>
   <mat-toolbar color="primary" class="toolbar">
     Pacientes Cadastrados
+
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="onPDF(patient.id)"
+      class="action-column-header"
+      >
+      Relatório
+      </button>
+
     <div class="paginator-container">
       <mat-paginator class="paginator"
         [length]="paginationData.pageElements"

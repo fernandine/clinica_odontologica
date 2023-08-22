@@ -13,14 +13,14 @@ public class AddressDto implements Serializable {
     private String bairro;
     private String localidade;
     private String uf;
-    private Long userId;
+    private Long patientId;
 
     public AddressDto() {
 
     }
 
     public AddressDto(Long id, String cep, String logradouro, String complemento,
-                      String bairro, String localidade, String uf, Long userId) {
+                      String bairro, String localidade, String uf, Long patientId) {
         this.id = id;
         this.cep = cep;
         this.logradouro = logradouro;
@@ -28,7 +28,7 @@ public class AddressDto implements Serializable {
         this.bairro = bairro;
         this.localidade = localidade;
         this.uf = uf;
-        this.userId = userId;
+        this.patientId = patientId;
     }
     public AddressDto(Address entity) {
         id = entity.getId();
@@ -38,7 +38,7 @@ public class AddressDto implements Serializable {
         bairro = entity.getBairro();
         localidade = entity.getLocalidade();
         uf = entity.getUf();
-        userId = entity.getUser().getId();
+        patientId = entity.getPatient().getId();
     }
 
     public Long getId() {
@@ -97,11 +97,11 @@ public class AddressDto implements Serializable {
         this.uf = uf;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getPatientId() {
+        return patientId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
     }
 }

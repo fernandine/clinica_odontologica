@@ -35,10 +35,10 @@ public class AddressController {
         return ResponseEntity.ok().body(dto);
     }
 
-    //busca endereco pelo id do usuario => /find?userId=2
+    //busca endereco pelo id do paciente => /find?patientId=2
     @GetMapping("/find")
-    public ResponseEntity<List<AddressDto>> getByUserId(@RequestParam("userId") Long userId) {
-        List<AddressDto> list = service.getByUserId(userId);
+    public ResponseEntity<List<AddressDto>> getByPatientId(@RequestParam("patientId") Long patientId) {
+        List<AddressDto> list = service.getByPatientId(patientId);
         return ResponseEntity.ok().body(list);
     }
 

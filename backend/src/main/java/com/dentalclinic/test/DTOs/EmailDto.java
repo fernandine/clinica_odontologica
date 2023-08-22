@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class EmailDto {
 
-    @NotBlank(message = "Campo obrigatório")
+    @NotBlank(message = "Campo requerido")
     @Email(message = "Email inválido")
     private String email;
 

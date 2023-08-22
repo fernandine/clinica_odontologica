@@ -14,6 +14,15 @@
       </mat-form-field>
 
       <mat-form-field class="full-width">
+        <mat-label>Contato</mat-label>
+        <input matInput formControlName="phone" #phone />
+        <mat-hint align="end">{{ phone.value.length }} / 50</mat-hint>
+        <mat-error *ngIf="form.get('phone')?.invalid">
+          {{ getErrorMessage('phone') }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
         <mat-label>Data da consulta</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="appointmentDate" #appointmentDate />
         <mat-hint>DD/MM/YYYY</mat-hint>
@@ -40,8 +49,61 @@
         <mat-error *ngIf="form.get('description')?.invalid">
           {{ getErrorMessage('description') }}
         </mat-error>
-
       </mat-form-field>
+
+      <mat-toolbar class="addressList-toolbar">
+        <span>Endereço</span>
+        <div class="fill-remaining-space"></div>
+        <button mat-icon-button color="accent" (click)="addAddress()">
+          <mat-icon aria-label="Adicione um novo endereço">add</mat-icon>
+        </button>
+      </mat-toolbar>
+
+      <table
+      class="full-width"
+      formArrayName="addressList"
+      *ngFor="let address of getAddressFormArray(); let i = index">
+      <tr [formGroupName]="i">
+
+        <td>
+          <mat-form-field appearance="outline" style="width: 30%; margin-right: 3%">
+            <mat-label>Cep</mat-label>
+            <input matInput formControlName="cep" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 65%">
+            <mat-label>Logradouro</mat-label>
+            <input matInput formControlName="logradouro" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 65%; margin-right: 3%">
+            <mat-label>Complemento</mat-label>
+            <input matInput formControlName="complemento" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 30%">
+            <mat-label>Bairro</mat-label>
+            <input matInput formControlName="bairro" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 70%; margin-right: 3%">
+            <mat-label>Cidade</mat-label>
+            <input matInput formControlName="localidade" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 25% ">
+            <mat-label>Uf</mat-label>
+            <input matInput formControlName="uf" />
+          </mat-form-field>
+
+
+          <button mat-icon-button color="warn" (click)="removeAddress(i)">
+            <mat-icon aria-label="Remove Address">delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+
     </form>
   </mat-card-content>
 

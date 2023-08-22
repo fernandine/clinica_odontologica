@@ -5,6 +5,21 @@
     <mat-cell *matCellDef="let patient">{{ patient.name }}</mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="phone">
+    <mat-header-cell *matHeaderCellDef>Contato</mat-header-cell>
+    <mat-cell *matCellDef="let patient">{{ patient.phone }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="addressList">
+    <mat-header-cell *matHeaderCellDef>Endereço</mat-header-cell>
+    <mat-cell *matCellDef="let patient">
+      <div *ngFor="let address of patient.addressList">
+        <p> Rua {{ address.logradouro }}, {{ address.bairro }},
+          {{ address.complemento }}, Cidade de {{ address.localidade }} - {{ address.uf }}</p>
+      </div>
+    </mat-cell>
+  </ng-container>
+
     <ng-container matColumnDef="appointmentDate">
       <mat-header-cell *matHeaderCellDef>Data da Consulta</mat-header-cell>
       <mat-cell *matCellDef="let patient">{{ patient.appointmentDate | date:'dd/MM/yyyy'}}</mat-cell>
@@ -19,7 +34,6 @@
       <mat-header-cell *matHeaderCellDef>Tratamento</mat-header-cell>
       <mat-cell *matCellDef="let patient">{{ patient.description }}</mat-cell>
     </ng-container>
-
 
   <ng-container class="column-all" matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef class="action-column">

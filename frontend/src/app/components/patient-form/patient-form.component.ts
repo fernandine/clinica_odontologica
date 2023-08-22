@@ -1,6 +1,6 @@
 import { DatePipe, Location} from '@angular/common';
 import { Component } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormGroup, NonNullableFormBuilder, UntypedFormArray, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
@@ -8,6 +8,7 @@ import { Patient } from '../../common/patient';
 import { PatientService } from '../../services/patient.service';
 import { FormUtilsService } from '../../services/form-utils.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Address } from '../../common/address';
 
 @Component({
   selector: 'app-patient-form',
@@ -24,9 +25,8 @@ export class PatientFormComponent {
     private snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute,
-    private formUtils: FormUtilsService,
+    public formUtils: FormUtilsService,
     private dialog: MatDialog,
-    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -35,11 +35,67 @@ export class PatientFormComponent {
     this.form = this.formBuilder.group({
       id: [''],
       name: [patient.name, [Validators.minLength(5), Validators.maxLength(50)]],
-      appointmentDate: [patient.appointmentDate, [Validators.required]],
+      phone: [patient.phone, [Validators.required]],
+      appointmentDate: [patient.appointmentDate || null, [Validators.required]],
       dentist: [patient.dentist, [Validators.minLength(5), Validators.maxLength(50)]],
       description: [patient.description, [Validators.minLength(5), Validators.maxLength(200)]],
+      addressList: this.formBuilder.array(this.retrieveaddress(patient), Validators.required),
     });
 
+  }
+
+  private retrieveaddress(patient: Patient) {
+    const addressList = [];
+    if (patient?.addressList) {
+      patient.addressList.forEach(address => addressList.push(this.createAddress(address)));
+    } else {
+      addressList.push(this.createAddress());
+    }
+    return addressList;
+  }
+
+  private createAddress(address: Address = {
+    id: '',
+    cep: '',
+    logradouro: '',
+    complemento: '',
+    bairro: '',
+    localidade: '',
+    uf: '',
+    patientId: 0
+  }) {
+    return this.formBuilder.group({
+      id: [address.id],
+      cep: [ address.cep, [Validators.required] ],
+      logradouro: [ address.logradouro, [Validators.required] ],
+      complemento: [ address.complemento,[Validators.required] ],
+      bairro: [ address.bairro,[Validators.required] ],
+      localidade: [ address.localidade,[Validators.required] ],
+      uf: [ address.uf,[Validators.required] ],
+    });
+  }
+
+  getAddressFormArray() {
+    return (<UntypedFormArray>this.form.get('addressList')).controls;
+  }
+
+
+  getAddressErrorMessage(fieldName: string, index: number) {
+    return this.formUtils.getFieldFormArrayErrorMessage(
+      this.form,
+      'adressList',
+      fieldName,
+      index
+    );
+  }
+  addAddress(): void {
+    const addressList = this.form.get('addressList') as UntypedFormArray;
+    addressList.push(this.createAddress());
+  }
+
+  removeAddress(index: number) {
+    const addressList = this.form.get('addressList') as UntypedFormArray;
+    addressList.removeAt(index);
   }
 
   onSubmit() {

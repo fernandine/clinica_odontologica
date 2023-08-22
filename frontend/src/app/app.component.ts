@@ -7,7 +7,7 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'clinic odonto';
+  title = 'Clínica odonto';
 
 showNavBar = true;
 

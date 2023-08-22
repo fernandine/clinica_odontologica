@@ -13,28 +13,28 @@ import { UserService } from '../../services/user.service';
 export class NavbarComponent {
 
   isLoggedIn!: boolean;
-  name: string = '';
+  firstname: string = '';
 
   constructor(
     private router: Router,
     private authService: AuthService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private userService: UserService
     ) { }
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isAuthenticated();
-    this.name = this.getName();
+    this.firstname = this.getUsername();
     this.loginService.getLoginObservable().subscribe((loggedIn: boolean) => {
       this.isLoggedIn = loggedIn;
-      this.name = loggedIn ? this.getName() : '';
+      this.firstname = loggedIn ? this.getUsername() : '';
     });
-  }
+    }
 
-  getName(): string {
-    const currentUser = this.authService.getCurrentUser();
-    return currentUser ? currentUser.name : '';
-  }
-
+    getUsername(): string {
+      const currentUser = this.authService.getCurrentUser();
+      return currentUser ? currentUser.firstname : '';
+    }
 
   getPatients(){
     this.router.navigate(['/patients']);

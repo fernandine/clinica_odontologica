@@ -36,23 +36,14 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements UserDetailsService {
 
-    private static Logger logger = LoggerFactory.getLogger(UserService.class);
-
     @Autowired
     private UserRepository repository;
-
-    @Autowired
-    private AddressRepository addressRepository;
-
     @Autowired
     private RoleRepository roleRepository;
-
     @Autowired
     private AuthService authService;
-    @Lazy
     @Autowired
     private PasswordEncoder passwordEncoder;
-
 
     @Transactional(readOnly = true)
     public List<UserDto> findAll() {
@@ -69,7 +60,7 @@ public class UserService implements UserDetailsService {
 
 //    @Transactional(readOnly = true)
 //    public UserDto findMe() {
-//        User entity = authenticated();
+//        User entity = authService.authenticated();
 //        return new UserDto(entity);
 //    }
 
@@ -114,11 +105,9 @@ public class UserService implements UserDetailsService {
 
     private void copyDtoToEntity(UserDto dto, User entity) {
 
-        entity.setName(dto.getName());
+        entity.setFirstname(dto.getFirstname());
+        entity.setLastname(dto.getLastname());
         entity.setEmail(dto.getEmail());
-        entity.setPhone(dto.getPhone());
-        entity.setDentist(dto.getDentist());
-        entity.setAppointmentDate(dto.getAppointmentDate());
     }
 
 
@@ -140,15 +129,4 @@ public class UserService implements UserDetailsService {
 
         return user;
     }
-//    protected User authenticated() {
-//        try {
-//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
-//            String username = jwtPrincipal.getClaim("username");
-//            return repository.findByEmail(username);
-//        }
-//        catch (Exception e) {
-//            throw new UsernameNotFoundException("Invalid user");
-//        }
-//    }
 }

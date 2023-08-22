@@ -69,10 +69,10 @@ public class CustomAccessTokenResponseHandler implements AuthenticationSuccessHa
 
         Map<String, Object> successCodeMessageMap = new HashMap<>();
         successCodeMessageMap.putAll(additionalParameters);
-        successCodeMessageMap.put("id", user.getId());
-        successCodeMessageMap.put("name", user.getName());
-        successCodeMessageMap.put("phone", user.getPhone());
-        successCodeMessageMap.put("email", user.getEmail());
+
+        successCodeMessageMap.put("firstname", user.getFirstname());
+
+
         return successCodeMessageMap;
     }
 }

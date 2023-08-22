@@ -14,15 +14,16 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+
     @PostMapping(value = "/recover-token")
-    public ResponseEntity<Void> createRecoverToken(@Valid @RequestBody EmailDto body) {
-        authService.createRecoverToken(body);
+    public ResponseEntity<Void> createRecoverToken(@Valid @RequestBody EmailDto dto) {
+        authService.createRecoverToken(dto);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/new-password")
-    public ResponseEntity<Void> saveNewPassword(@Valid @RequestBody NewPasswordDto body) {
-        authService.saveNewPassword(body);
+    public ResponseEntity<Void> saveNewPassword(@Valid @RequestBody NewPasswordDto dto) {
+        authService.saveNewPassword(dto);
         return ResponseEntity.noContent().build();
     }
 }

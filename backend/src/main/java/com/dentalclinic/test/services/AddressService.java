@@ -2,8 +2,10 @@ package com.dentalclinic.test.services;
 
 import com.dentalclinic.test.DTOs.AddressDto;
 import com.dentalclinic.test.entities.Address;
+import com.dentalclinic.test.entities.Patient;
 import com.dentalclinic.test.entities.User;
 import com.dentalclinic.test.repositories.AddressRepository;
+import com.dentalclinic.test.repositories.PatientRepository;
 import com.dentalclinic.test.repositories.UserRepository;
 import com.dentalclinic.test.services.exceptions.DatabaseException;
 import com.dentalclinic.test.services.exceptions.ResourceNotFoundException;
@@ -25,19 +27,18 @@ public class AddressService {
     private AddressRepository repository;
 
     @Autowired
-    private UserRepository userRepository;
+    private PatientRepository patientRepository;
 
     @Transactional(readOnly = true)
     public List<AddressDto> findAll() {
         List<Address> list = repository.findAll();
         return list.stream().map(AddressDto::new).collect(Collectors.toList());
-
     }
 
     @Transactional(readOnly = true)
-    public List<AddressDto> getByUserId(Long userId) {
-        User user = userRepository.getReferenceById(userId);
-        List<Address> list = repository.findbyUserId(user);
+    public List<AddressDto> getByPatientId(Long patientId) {
+        Patient patient = patientRepository.getReferenceById(patientId);
+        List<Address> list = repository.findbyPatientId(patient);
         return list.stream().map(AddressDto::new).collect(Collectors.toList());
     }
 
@@ -58,9 +59,9 @@ public class AddressService {
         entity.setLogradouro(dto.getLogradouro());
         entity.setLocalidade(dto.getLocalidade());
 
-        User user = new User();
-        user.setId(dto.getUserId());
-        entity.setUser(user);
+        Patient patient = new Patient();
+        patient.setId(dto.getPatientId());
+        entity.setPatient(patient);
 
         entity = repository.save(entity);
         return new AddressDto(entity);

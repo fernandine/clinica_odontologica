@@ -27,14 +27,14 @@ public class UserController {
 		return ResponseEntity.ok().body(list);
 	}
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
+	@PreAuthorize("hasAnyRole('ROLE_DENTIST', 'ROLE_PATIENT')")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserDto> findById(@PathVariable Long id) {
 		UserDto dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
 
-//	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
+//	@PreAuthorize("hasAnyRole('ROLE_DENTIST', 'ROLE_PATIENT')")
 //	@GetMapping(value = "/me")
 //	public ResponseEntity<UserDto> findMe() {
 //		UserDto dto = service.findMe();

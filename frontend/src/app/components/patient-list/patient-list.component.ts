@@ -12,7 +12,6 @@ export class PatientListComponent {
 
   @Input() patients: Patient[] = [];
   @Output() add: EventEmitter<boolean> = new EventEmitter(false);
-  @Output() details: EventEmitter<Patient> = new EventEmitter(false);
   @Output() edit: EventEmitter<Patient> = new EventEmitter(false);
   @Output() remove: EventEmitter<Patient> = new EventEmitter(false);
 
@@ -20,6 +19,8 @@ export class PatientListComponent {
 
   readonly displayedColumns = [
     'name',
+    'phone',
+    'addressList',
     'appointmentDate',
     'dentist',
     'description',
@@ -29,6 +30,7 @@ export class PatientListComponent {
   constructor(
     private patientService: PatientService
     ) {}
+
   ngOnInit(): void {
     this.loadList();
   }
@@ -45,14 +47,11 @@ export class PatientListComponent {
     this.patientService
       .list(pageSize, pageIndex, pageSize)
       .subscribe((page: Page<Patient>) => {
-        console.log('Página de pacientes:', page);
+
         this.paginationData.totalItems = page.totalElements;
         this.patients = page.content;
       });
   }
-    onDetails(record: Patient) {
-      this.details.emit(record);
-    }
 
     onAdd() {
       this.add.emit(true);

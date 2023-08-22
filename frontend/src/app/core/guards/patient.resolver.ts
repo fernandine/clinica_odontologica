@@ -20,11 +20,13 @@ export class PatientResolver {
     return of ({
       id: '',
       name: '',
+      phone: '',
+      addressList: [],
       appointmentDate: new Date(),
       dentist: '',
       description: ''
-      }
-    )};
+    })
+    };
   }
 
 

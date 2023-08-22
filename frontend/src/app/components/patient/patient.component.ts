@@ -1,10 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { Page } from 'src/app/common/pagination';
+import { ReportService } from 'src/app/services/report.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { Patient } from '../../common/patient';
@@ -20,6 +21,9 @@ export class PatientComponent {
   patient$: Observable<Page<Patient>> | null = null;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  code = '01';
+  acao = 'v';
+
   paginationData = {
     pageIndex: 0,
     pageSize: 10,
@@ -31,11 +35,24 @@ export class PatientComponent {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private report: ReportService,
+    public dialogRef: MatDialogRef<ReportComponent>,
+    @Inject(MAT_DIALOG_DATA) public patient: Patient
   ) {}
 
   ngOnInit() {
     this.refresh();
+  }
+
+  onPDF(id: string): void {
+    if (id) {
+    this.report.getPDF(this.code, this.acao, id).subscribe(blob => {
+      const file = new Blob([blob], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
+    });
+   }
   }
 
   refresh() {

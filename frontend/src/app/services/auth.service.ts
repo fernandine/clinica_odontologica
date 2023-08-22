@@ -31,9 +31,9 @@ export class AuthService {
       map(response => {
         const token = response.access_token;
         const id = response.id;
-        const name = response.name;
+        const firstname = response.firstname;
         if (token) {
-          const currentUser = { username, token, id, name };
+          const currentUser = { username, token, id, firstname };
           this.storageService.setItem('currentUser', currentUser);
           return true;
         } else {
@@ -45,7 +45,7 @@ export class AuthService {
 
   getCurrentUser(): {
     id: string;
-    name: string;
+    firstname: string;
     username: string;
     token: string;
   } | null {
@@ -54,8 +54,8 @@ export class AuthService {
     if (currentUser && currentUser.token) {
       return {
         id: currentUser.id || '',
-        name: currentUser.name || '',
         username: currentUser.username || '',
+        firstname: currentUser.firstname || '',
         token: currentUser.token || '',
       };
     } else {
@@ -66,6 +66,11 @@ export class AuthService {
   isAuthenticated(): boolean {
     const currentUser = this.storageService.getItem('currentUser');
     return !!currentUser && !!currentUser.token;
+  }
+
+  getToken(): string {
+    const currentUser = this.storageService.getItem('currentUser') || {};
+    return currentUser.token;
   }
 
   logout(): void {

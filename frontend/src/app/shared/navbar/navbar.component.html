@@ -16,7 +16,7 @@
 
       <div *ngIf="isLoggedIn">
 
-        <a mat-button>Olá, Dr(a).{{getName()}}</a>
+        <a mat-button>Olá, Dr(a). {{ firstname }}</a>
 
         <a mat-button (click)="logout()">Sair</a>
       </div>

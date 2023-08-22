@@ -18,19 +18,9 @@ export class AddressService {
       return this.http.get<Address[]>(this.apiUrl);
     }
 
-    getByUserId(patientId: number): Observable<Address[]> {
-      const url = `${this.apiUrl}/find?patientId=${patientId}`;
-      return this.http.get<Address[]>(url);
-    }
-
     getById(id: string): Observable<Address[]> {
       const url = `${this.apiUrl}/${id}`;
       return this.http.get<Address[]>(url);
-    }
-
-    getAddressByCEP(cep: string): Observable<Address> {
-      const url = `${this.apiUrl}/viacep/${cep}`;
-      return this.http.get<Address>(url);
     }
 
     createAddress(address: Address): Observable<Address> {

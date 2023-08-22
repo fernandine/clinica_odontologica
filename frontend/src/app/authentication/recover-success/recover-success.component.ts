@@ -1,3 +1,4 @@
+import { Location} from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -12,11 +13,16 @@ export class RecoverSuccessComponent {
 
   constructor(
     private route: ActivatedRoute,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.email = params['email'] || '';
     });
+  }
+
+  onCancel() {
+    this.location.back();
   }
 }

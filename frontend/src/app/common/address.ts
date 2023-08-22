@@ -6,5 +6,4 @@ export interface Address {
   bairro: string;
   localidade: string;
   uf: string;
-  patientId: number;
 }

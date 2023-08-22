@@ -2,7 +2,10 @@ package com.dentalclinic.test.controllers;
 
 import com.dentalclinic.test.DTOs.AddressDto;
 import com.dentalclinic.test.services.AddressService;
-import com.dentalclinic.test.services.ViaCepService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+@Tag(name = "Endereço", description = "Controle de endereços")
 @RestController
 @RequestMapping(value = "/adresses")
 public class AddressController {
@@ -18,27 +22,10 @@ public class AddressController {
     @Autowired
     private AddressService service;
 
-    @Autowired
-    private ViaCepService viaCepService;
-
     //busca todos os endereços
     @GetMapping
     public ResponseEntity<List<AddressDto>> findAll() {
         List<AddressDto> list = service.findAll();
-        return ResponseEntity.ok().body(list);
-    }
-
-    //consulta por cep
-    @GetMapping("/viacep/{cep}")
-    public ResponseEntity<AddressDto> consultaCep(@PathVariable String cep) {
-        AddressDto dto = viaCepService.findByCep(cep);
-        return ResponseEntity.ok().body(dto);
-    }
-
-    //busca endereco pelo id do paciente => /find?patientId=2
-    @GetMapping("/find")
-    public ResponseEntity<List<AddressDto>> getByPatientId(@RequestParam("patientId") Long patientId) {
-        List<AddressDto> list = service.getByPatientId(patientId);
         return ResponseEntity.ok().body(list);
     }
 
@@ -50,6 +37,11 @@ public class AddressController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Criação de um novo endereço")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Endereço criado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
     public ResponseEntity<AddressDto> insert(@RequestBody AddressDto dto) {
         AddressDto newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

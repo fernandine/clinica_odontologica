@@ -1,12 +1,11 @@
 package com.dentalclinic.test.DTOs;
 
-import com.dentalclinic.test.entities.Address;
 import com.dentalclinic.test.entities.Patient;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PatientDto implements Serializable {
     private Long id;
@@ -16,7 +15,7 @@ public class PatientDto implements Serializable {
     private String dentist;
     private String description;
 
-    private List<AddressDto> addressList = new ArrayList<>();
+    private Set<AddressDto> addressList = new HashSet<>();
 
     public PatientDto(){}
 
@@ -36,10 +35,7 @@ public class PatientDto implements Serializable {
         dentist = entity.getDentist();
         description = entity.getDescription();
         phone = entity.getPhone();
-        for (Address address : entity.getAddressList()) {
-            AddressDto addressDto = new AddressDto(address);
-            addressList.add(addressDto);
-        }
+        entity.getAddressList().forEach(address -> this.addressList.add(new AddressDto(address)));
     }
 
     public Long getId() {
@@ -90,11 +86,11 @@ public class PatientDto implements Serializable {
         this.phone = phone;
     }
 
-    public List<AddressDto> getAddressList() {
+    public Set<AddressDto> getAddressList() {
         return addressList;
     }
 
-    public void setAddressList(List<AddressDto> addressList) {
+    public void setAddressList(Set<AddressDto> addressList) {
         this.addressList = addressList;
     }
 }

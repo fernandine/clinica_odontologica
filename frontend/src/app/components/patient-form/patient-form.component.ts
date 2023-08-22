@@ -1,6 +1,6 @@
-import { DatePipe, Location} from '@angular/common';
+import { Location} from '@angular/common';
 import { Component } from '@angular/core';
-import { FormArray, FormGroup, NonNullableFormBuilder, UntypedFormArray, Validators } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, UntypedFormArray, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
@@ -33,7 +33,7 @@ export class PatientFormComponent {
    const patient: Patient = this.route.snapshot.data['patient'];
 
     this.form = this.formBuilder.group({
-      id: [''],
+      id: [patient.id],
       name: [patient.name, [Validators.minLength(5), Validators.maxLength(50)]],
       phone: [patient.phone, [Validators.required]],
       appointmentDate: [patient.appointmentDate || null, [Validators.required]],
@@ -62,7 +62,7 @@ export class PatientFormComponent {
     bairro: '',
     localidade: '',
     uf: '',
-    patientId: 0
+
   }) {
     return this.formBuilder.group({
       id: [address.id],
@@ -78,7 +78,6 @@ export class PatientFormComponent {
   getAddressFormArray() {
     return (<UntypedFormArray>this.form.get('addressList')).controls;
   }
-
 
   getAddressErrorMessage(fieldName: string, index: number) {
     return this.formUtils.getFieldFormArrayErrorMessage(
